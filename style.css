@@ -1,3 +1,13 @@
+/* —— L'Oréal Brand Variables —— */
+:root {
+  --loreal-black: #000000;
+  --loreal-white: #ffffff;
+  --loreal-gold: #c6a972;
+  --loreal-beige: #f4f1ee;
+  --loreal-gray: #b0a99f;
+  --loreal-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 /* —— basic reset —— */
 * {
   box-sizing: border-box;
@@ -6,12 +16,83 @@
 }
 
 /* —— body + fonts —— */
+
 body {
-  font-family: "Montserrat", Arial, Helvetica, sans-serif;
-  color: #333;
+  font-family: var(--loreal-font);
+  color: var(--loreal-black);
+  background-color: var(--loreal-beige);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
   display: flex;
   justify-content: center;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--loreal-font);
+  color: var(--loreal-black);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+button, .btn {
+  background-color: var(--loreal-black);
+  color: var(--loreal-white);
+  border: none;
+  padding: 0.75em 1.5em;
+  font-family: var(--loreal-font);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: background-color 0.3s ease;
+}
+
+button:hover, .btn:hover {
+  background-color: var(--loreal-gold);
+  color: var(--loreal-black);
+}
+
+a {
+  color: var(--loreal-black);
+  text-decoration: none;
+  border-bottom: 1px solid var(--loreal-gold);
+}
+
+a:hover {
+  color: var(--loreal-gold);
+  border-bottom: 1px solid var(--loreal-black);
+}
+
+/* Update header/footer to use brand colors */
+.site-header, .site-footer {
+  background: none;
+  color: var(--loreal-black);
+}
+
+/* Card style (not used yet, but available) */
+.card {
+  border: 1px solid var(--loreal-gray);
+  border-radius: 8px;
+  padding: 1.5em;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  background-color: var(--loreal-white);
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+input, textarea {
+  font-family: var(--loreal-font);
+  border: 1px solid var(--loreal-gray);
+  padding: 0.5em;
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 1em;
+  background-color: var(--loreal-white);
+  color: var(--loreal-black);
+}
+
 
 .page-wrapper {
   width: 90%;
@@ -19,15 +100,19 @@ body {
 }
 
 /* header */
+
 .site-header {
   text-align: center;
-  padding-top: 50px;
+  padding-top: 60px;
+  margin-bottom: 24px;
 }
 
+
 .site-title {
-  font-size: 22px;
+  font-size: 2rem;
   font-weight: 500;
   margin-bottom: 10px;
+  letter-spacing: 1px;
 }
 
 /* chat window */
@@ -79,10 +164,11 @@ body {
   outline-offset: 2px;
 }
 
+
 .chat-form button {
   font-size: 18px;
-  background: #000;
-  color: #fff;
+  background: var(--loreal-black);
+  color: var(--loreal-white);
   border: none;
   padding: 12px;
   width: 48px;
@@ -98,8 +184,10 @@ body {
   font-size: 24px;
 }
 
+
 .chat-form button:hover {
-  background: #666666;
+  background: var(--loreal-gold);
+  color: var(--loreal-black);
 }
 
 .chat-form button:focus {
@@ -121,23 +209,28 @@ body {
 }
 
 /* footer */
+
 .site-footer {
   margin: 60px 0 40px;
   text-align: center;
   font-size: 14px;
-  color: #666;
+  color: var(--loreal-gray);
+  background: none;
 }
 
 .site-footer nav {
   margin-top: 12px;
 }
 
+
 .site-footer a {
   margin: 0 8px;
-  color: #000;
+  color: var(--loreal-black);
   text-decoration: none;
+  border-bottom: 1px solid var(--loreal-gold);
 }
 
 .site-footer a:hover {
-  color: #666666;
+  color: var(--loreal-gold);
+  border-bottom: 1px solid var(--loreal-black);
 }
