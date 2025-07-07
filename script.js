@@ -3,7 +3,6 @@ const chatForm = document.getElementById("chatForm");
 const userInput = document.getElementById("userInput");
 const chatWindow = document.getElementById("chatWindow");
 
-
 // Set initial message
 chatWindow.innerHTML = `<div class="msg ai">👋 Hello! How can I help you today?</div>`;
 
@@ -22,7 +21,7 @@ function addMessage(text, sender) {
     const lines = text.split(/\n/);
     let html = "";
     let inList = false;
-    lines.forEach(line => {
+    lines.forEach((line) => {
       if (/^\s*[-*•]/.test(line)) {
         if (!inList) {
           html += "<ul style='margin: 8px 0 0 18px; padding: 0;'>";
@@ -51,8 +50,8 @@ const conversationHistory = [
   {
     role: "system",
     content:
-      "You are a helpful and knowledgeable assistant for L’Oréal. Only answer questions related to L’Oréal products, beauty routines, skincare, haircare, makeup, and product recommendations. Politely decline to answer any questions that are not relevant to L’Oréal’s offerings or beauty-related topics. Keep responses clear, concise, and aligned with L’Oréal’s brand voice: professional, inclusive, and beauty-focused. Your responses should be friendly as if you are a representative of the company."
-  }
+      "You are a helpful and knowledgeable assistant for L’Oréal. Only answer questions related to L’Oréal products, beauty routines, skincare, haircare, makeup, and product recommendations. Politely decline to answer any questions that are not relevant to L’Oréal’s offerings or beauty-related topics. Keep responses clear, concise, and aligned with L’Oréal’s brand voice: professional, inclusive, and beauty-focused. Your responses should be friendly as if you are a representative of the company.",
+  },
 ];
 
 // Async function to get a response from OpenAI
@@ -70,7 +69,7 @@ async function getOpenAIResponse(userMessage) {
   const data = {
     model: "gpt-4o",
     messages: conversationHistory, // Send the full conversation history
-    max_tokens: 200
+    max_tokens: 200,
   };
 
   try {
@@ -78,13 +77,13 @@ async function getOpenAIResponse(userMessage) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${apiKey}`
+        Authorization: `Bearer ${apiKey}`,
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
 
     // Remove the loading message
-    const loadingMsg = chatWindow.querySelector('.msg.ai:last-child');
+    const loadingMsg = chatWindow.querySelector(".msg.ai:last-child");
     if (loadingMsg && loadingMsg.textContent === "Thinking...") {
       chatWindow.removeChild(loadingMsg);
     }
@@ -106,7 +105,7 @@ async function getOpenAIResponse(userMessage) {
     addMessage(aiText, "ai");
   } catch (error) {
     // Remove the loading message if error
-    const loadingMsg = chatWindow.querySelector('.msg.ai:last-child');
+    const loadingMsg = chatWindow.querySelector(".msg.ai:last-child");
     if (loadingMsg && loadingMsg.textContent === "Thinking...") {
       chatWindow.removeChild(loadingMsg);
     }
