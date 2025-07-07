@@ -132,17 +132,47 @@ input, textarea {
 }
 
 /* messages */
+
+/* Chat bubbles like iPhone messages */
 .msg {
+  display: inline-block;
+  clear: both;
+  padding: 12px 18px;
   margin-bottom: 14px;
   line-height: 1.5;
+  border-radius: 22px;
+  max-width: 80%;
+  font-size: 16px;
+  word-break: break-word;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 .msg.user {
-  color: #000;
+  background: var(--loreal-white, #fff);
+  color: var(--loreal-black, #000);
+  float: right;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 22px;
+  border-top-right-radius: 22px;
+  border-top-left-radius: 22px;
+  border: 1px solid #e0e0e0;
 }
 
 .msg.ai {
-  color: #666666;
+  background: var(--loreal-black, #000);
+  color: var(--loreal-white, #fff);
+  float: left;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 22px;
+  border-top-right-radius: 22px;
+  border-top-left-radius: 22px;
+}
+
+/* Clear floats for chat window */
+.chat-window::after {
+  content: "";
+  display: block;
+  clear: both;
 }
 
 /* input row */
@@ -233,4 +263,17 @@ input, textarea {
 .site-footer a:hover {
   color: var(--loreal-gold);
   border-bottom: 1px solid var(--loreal-black);
+}
+
+.latest-question {
+  text-align: left;
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #555;
+  background: #f4f1ee;
+  padding: 8px 16px;
+  border-radius: 14px;
+  border: 1px solid #e0dedb;
+  max-width: 80%;
 }

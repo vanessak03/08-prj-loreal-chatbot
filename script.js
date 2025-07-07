@@ -10,16 +10,56 @@ chatWindow.innerHTML = `<div class="msg ai">👋 Hello! How can I help you today
 /* Handle form submit */
 
 // Function to add a message to the chat window
+
+// Function to add a message to the chat window, with basic bullet formatting for AI responses
 function addMessage(text, sender) {
   const msgDiv = document.createElement("div");
   msgDiv.className = `msg ${sender}`;
-  msgDiv.textContent = text;
+
+  // If the sender is AI and the message contains multiple lines that look like bullets, format as a list
+  if (sender === "ai" && /\n[-*•]/.test(text)) {
+    // Split into lines
+    const lines = text.split(/\n/);
+    let html = "";
+    let inList = false;
+    lines.forEach(line => {
+      if (/^\s*[-*•]/.test(line)) {
+        if (!inList) {
+          html += "<ul style='margin: 8px 0 0 18px; padding: 0;'>";
+          inList = true;
+        }
+        html += `<li>${line.replace(/^\s*[-*•]\s*/, "")}</li>`;
+      } else {
+        if (inList) {
+          html += "</ul>";
+          inList = false;
+        }
+        html += `<div>${line}</div>`;
+      }
+    });
+    if (inList) html += "</ul>";
+    msgDiv.innerHTML = html;
+  } else {
+    msgDiv.textContent = text;
+  }
   chatWindow.appendChild(msgDiv);
   chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
+// Store the conversation history as an array of message objects
+const conversationHistory = [
+  {
+    role: "system",
+    content:
+      "You are a helpful and knowledgeable assistant for L’Oréal. Only answer questions related to L’Oréal products, beauty routines, skincare, haircare, makeup, and product recommendations. Politely decline to answer any questions that are not relevant to L’Oréal’s offerings or beauty-related topics. Keep responses clear, concise, and aligned with L’Oréal’s brand voice: professional, inclusive, and beauty-focused. Your responses should be friendly as if you are a representative of the company."
+  }
+];
+
 // Async function to get a response from OpenAI
 async function getOpenAIResponse(userMessage) {
+  // Add the user's message to the conversation history
+  conversationHistory.push({ role: "user", content: userMessage });
+
   // Show a loading message
   addMessage("Thinking...", "ai");
 
@@ -29,10 +69,7 @@ async function getOpenAIResponse(userMessage) {
 
   const data = {
     model: "gpt-4o",
-    messages: [
-      { role: "system", content: "You are a helpful assistant for L'Oréal product advice." },
-      { role: "user", content: userMessage }
-    ],
+    messages: conversationHistory, // Send the full conversation history
     max_tokens: 200
   };
 
@@ -58,9 +95,14 @@ async function getOpenAIResponse(userMessage) {
     }
 
     const result = await response.json();
-    const aiText = result.choices && result.choices[0] && result.choices[0].message.content
-      ? result.choices[0].message.content.trim()
-      : "Sorry, I didn't understand that.";
+    const aiText =
+      result.choices && result.choices[0] && result.choices[0].message.content
+        ? result.choices[0].message.content.trim()
+        : "Sorry, I didn't understand that.";
+
+    // Add the AI's response to the conversation history
+    conversationHistory.push({ role: "assistant", content: aiText });
+
     addMessage(aiText, "ai");
   } catch (error) {
     // Remove the loading message if error
@@ -72,6 +114,12 @@ async function getOpenAIResponse(userMessage) {
   }
 }
 
+// Show the latest user question above the chat window
+function showLatestQuestion(question) {
+  const latestQuestionDiv = document.getElementById("latestQuestion");
+  latestQuestionDiv.textContent = question ? `You asked: ${question}` : "";
+}
+
 // Handle form submit
 chatForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -81,6 +129,9 @@ chatForm.addEventListener("submit", async (e) => {
   // Show user message
   addMessage(message, "user");
   userInput.value = "";
+
+  // Show the latest question above the chat window
+  showLatestQuestion(message);
 
   // Get AI response
   await getOpenAIResponse(message);
