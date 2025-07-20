@@ -7,8 +7,9 @@
 
 /* —— body + fonts —— */
 body {
-  font-family: "Montserrat", Arial, Helvetica, sans-serif;
-  color: #333;
+  background: #F5F5DC; /* beige */
+  color: #000;
+  font-family: "Montserrat", "Futura", "Arial", sans-serif;
   display: flex;
   justify-content: center;
 }
@@ -22,12 +23,25 @@ body {
 .site-header {
   text-align: center;
   padding-top: 50px;
+  display: flex;
+  align-items: center;
+  color: #000;
 }
 
 .site-title {
-  font-size: 22px;
-  font-weight: 500;
+  font-family: "Montserrat", "Futura", "Arial", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #000;
+  letter-spacing: 2px;
   margin-bottom: 10px;
+}
+
+.logo {
+  height: 50px; /* Adjust as needed */
+  margin-right: 16px;
+  vertical-align: middle;
+  margin-top: 12px; /* This shifts the logo down */
 }
 
 /* chat window */
@@ -37,27 +51,50 @@ body {
 
 .chat-window {
   height: 360px;
-  border: 1px solid #000;
+  border: 2px solid #E3A535; /* gold accent */
   padding: 20px;
   font-size: 18px;
   line-height: 1.5;
   overflow-y: auto;
-  background: #fafafa;
+  background: #fff;
   white-space: pre-line;
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
 }
 
 /* messages */
 .msg {
+  max-width: 70%;
+  padding: 12px 18px;
+  border-radius: 20px;
   margin-bottom: 14px;
+  font-size: 16px;
   line-height: 1.5;
+  display: inline-block;
+  clear: both;
+  word-break: break-word;
 }
 
 .msg.user {
-  color: #000;
+  background: #000;
+  color: #fff;
+  margin-left: auto;
+  margin-right: 0;
+  text-align: right;
+  border-bottom-right-radius: 4px;
+  border: 2px solid #FF003B; /* red accent */
 }
 
 .msg.ai {
-  color: #666666;
+  background: #fff;
+  color: #000;
+  margin-right: auto;
+  margin-left: 0;
+  text-align: left;
+  border-bottom-left-radius: 4px;
+  border: 2px solid #E3A535; /* gold accent */
 }
 
 /* input row */
@@ -81,9 +118,10 @@ body {
 
 .chat-form button {
   font-size: 18px;
-  background: #000;
+  background: #FF003B;
   color: #fff;
-  border: none;
+  border-radius: 24px;
+  border: 2px solid #E3A535;
   padding: 12px;
   width: 48px;
   height: 48px;
